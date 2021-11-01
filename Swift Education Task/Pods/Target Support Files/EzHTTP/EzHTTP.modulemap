@@ -1,0 +1,6 @@
+framework module EzHTTP {
+  umbrella header "EzHTTP-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+framework module EzImageLoader {
+  umbrella header "EzImageLoader-umbrella.h"
+
+  export *
+  module * { export * }
+}
