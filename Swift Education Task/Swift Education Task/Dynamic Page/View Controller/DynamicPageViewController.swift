@@ -21,8 +21,23 @@ class DynamicPageViewController: UIViewController, Reusable
     @IBOutlet weak var tableView                : UITableView!
     
     //MARK: - Properties
-    private lazy var presenter                  = DynamicPagePresenter(with: self)
+    private var presenter                       : DynamicPagePresenter?
     weak var delegate                           : DynamicPageViewControllerDelegate?
+    private var coordinator                     : DynamicCoordinator?
+    
+    /// Custom initializer
+    init(presenter: DynamicPagePresenter, coordinator: DynamicCoordinator)
+    {
+        super.init(nibName: Self.reuseIdentifier, bundle: nil)
+        self.presenter      = presenter
+        self.coordinator    = coordinator
+        
+    }
+    
+    required init?(coder: NSCoder)
+    {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad()
     {
@@ -36,8 +51,8 @@ class DynamicPageViewController: UIViewController, Reusable
     {
         let userText        : String? = checkIsUserTextFieldValid() ? userTextField.text : nil
         guard let number    = Int(userText ?? "0") else { return }
-        presenter.setNumberOfCells(number: number)
-        presenter.goButtonTapped()
+        presenter?.setNumberOfCells(number: number)
+        presenter?.goButtonTapped()
     }
     
     //MARK: - Private methods
@@ -50,13 +65,13 @@ class DynamicPageViewController: UIViewController, Reusable
     {
         if userTextField.text == "" || userTextField.text == nil
         {
-            presenter.presentAlert(title: StringConstants.noTextAlertTitle, message: StringConstants.noTextAlertMessage)
+            presenter?.presentAlert(title: StringConstants.noTextAlertTitle, message: StringConstants.noTextAlertMessage)
             return false
         }
         guard let userText = userTextField.text else { return false }
         if !userText.isInt
         {
-            presenter.presentAlert(title: StringConstants.notANumberAlertTitle, message: StringConstants.notANumberAlertMessage)
+            presenter?.presentAlert(title: StringConstants.notANumberAlertTitle, message: StringConstants.notANumberAlertMessage)
             return false
         }
         return true
@@ -111,13 +126,14 @@ extension DynamicPageViewController: UITableViewDelegate, UITableViewDataSource
 {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        presenter.getNumberOfRowsInSection(section: section)
+        guard let numberOfRows = presenter?.getNumberOfRowsInSection(section: section) else { return 0 }
+        return numberOfRows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell            = tableView.dequeueReusableCell(for: indexPath) as DynamicPageTableViewCell
-        guard let presenter = presenter.getCellPresenter(for: indexPath) else { return UITableViewCell() }
+        guard let presenter = presenter?.getCellPresenter(for: indexPath) else { return UITableViewCell() }
         cell.configure(with: presenter)
         return cell
     }
@@ -126,6 +142,6 @@ extension DynamicPageViewController: UITableViewDelegate, UITableViewDataSource
     {
         delegate?.passSelectedCellIndex(index: indexPath.row)
         tableView.deselectRow(at: indexPath, animated: true)
-        navigationController?.popViewController(animated: true)
+        coordinator?.remove()
     }
 }

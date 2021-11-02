@@ -13,18 +13,25 @@ class DynamicCoordinator: Coordinator
     var navigationController    : UINavigationController
     private weak var delegate   : DynamicPageViewControllerDelegate?
     
-    init(navigationController: UINavigationController, delegate: DynamicPageViewControllerDelegate?)
+    init(navigationController: UINavigationController)
     {
         self.navigationController = navigationController
-        self.delegate             = delegate
     }
     
     //MARK: - Coordinator methods
     func start()
     {
-        let vc      = DynamicPageViewController(nibName: DynamicPageViewController.reuseIdentifier, bundle: nil)
-        vc.delegate = self.delegate
-        navigationController.pushViewController(vc, animated: true)
+        guard let homeViewController    = navigationController.viewControllers[0] as? HomeViewController else { return }
+        let presenter                   = DynamicPagePresenter()
+        let viewController              = DynamicPageViewController(presenter: presenter, coordinator: self)
+        presenter.delegate              = viewController
+        viewController.delegate         = homeViewController
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func moveToPage4()
+    {
+        
     }
     
     func remove()

@@ -22,10 +22,24 @@ class HomeViewController: UIViewController, Reusable
     @IBOutlet private weak var startButton      : UIButton!
     
     //MARK: - Properties
-    private lazy var presenter          = HomePresenter(with: self)
+    private var presenter               : HomePresenter?
     private var numberOfTaps            = 0
-    private var page2SelectedCellIndex  = 0
-    private var coordinator             : Coordinator?
+    var page2SelectedCellIndex          : Int?
+    private var coordinator             : HomeCoordinator?
+    
+    /// Custom initializer
+    init(presenter: HomePresenter, coordinator: HomeCoordinator)
+    {
+        super.init(nibName: Self.reuseIdentifier, bundle: nil)
+        self.presenter              = presenter
+        self.coordinator            = coordinator
+        self.presenter?.delegate    = self
+    }
+    
+    required init?(coder: NSCoder)
+    {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad()
     {
@@ -36,7 +50,7 @@ class HomeViewController: UIViewController, Reusable
     //MARK:- IBActions
     @IBAction func startButtonTapped(_ sender: UIButton)
     {
-        presenter.startButtonTapped(navigateTo: .page2)
+        presenter?.userTappedStartButton()
     }
     
     @IBAction func dataPassedTapped(_ sender: UIButton)
@@ -44,7 +58,7 @@ class HomeViewController: UIViewController, Reusable
         guard let startButtonText = startButton.titleLabel?.text else { return }
         if startButtonText.isInt
         {
-            presenter.startButtonTapped(navigateTo: .page3)
+            presenter?.userTappedDataPassedButton()
         }
     }
     
@@ -72,8 +86,9 @@ class HomeViewController: UIViewController, Reusable
     
     private func addGestureRecognizerToSuperView()
     {
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(userTappedOnScreen))
-        super.view.addGestureRecognizer(gesture)
+        let gesture                     = UITapGestureRecognizer(target: self, action: #selector(userTappedOnScreen))
+        gesture.numberOfTapsRequired    = 6
+        view.addGestureRecognizer(gesture)
     }
     
     private func resetViewToInitialState()
@@ -83,22 +98,9 @@ class HomeViewController: UIViewController, Reusable
         numberOfTaps                = 0
     }
     
-    private func getNavigationController() -> UINavigationController?
-    {
-        guard let navigationController = navigationController else { return nil }
-        return navigationController
-    }
-    
     @objc private func userTappedOnScreen()
     {
-        if numberOfTaps == 5
-        {
-            self.view.backgroundColor   = .randomColor()
-            numberOfTaps                = 0
-        } else
-        {
-            numberOfTaps += 1
-        }
+        self.view.backgroundColor   = .randomColor()
     }
 }
 
@@ -108,17 +110,13 @@ extension HomeViewController: HomePresenterDelegate
     func navigateToPage2()
     {
         resetViewToInitialState()
-        guard let navController     = getNavigationController() else { return }
-        coordinator                 = DynamicCoordinator(navigationController: navController, delegate: self)
-        coordinator?.start()
+        coordinator?.moveToPage2()
     }
     
     func navigateToPage3()
     {
         resetViewToInitialState()
-        guard let navController     = getNavigationController() else { return }
-        coordinator                 = ThirdPageCoordinator(navigationController: navController, numberOfCells: page2SelectedCellIndex)
-        coordinator?.start()
+        coordinator?.moveToPage3()
     }
 }
 

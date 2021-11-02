@@ -16,25 +16,20 @@ protocol DynamicPagePresenterDelegate: AnyObject
 class DynamicPagePresenter: NSObject
 {
     //MARK: - Properties
-    private weak var presenterDelegate  : DynamicPagePresenterDelegate?
+    weak var delegate                   : DynamicPagePresenterDelegate?
     private var numberOfCells           : Int = 0
     private var cellPresenters          : [DynamicPageTableViewCellPresenter] = []
-    
-    init (with delegate: DynamicPagePresenterDelegate)
-    {
-        self.presenterDelegate  = delegate
-    }
     
     //MARK: - Presenter methods
     func goButtonTapped()
     {
         makeCellPresenters()
-        presenterDelegate?.populateTableView()
+        delegate?.populateTableView()
     }
     
     func presentAlert(title: String, message: String)
     {
-        presenterDelegate?.presentAlertDialog(title: title, message: message)
+        delegate?.presentAlertDialog(title: title, message: message)
     }
     
     func getNumberOfRowsInSection(section: Int) -> Int

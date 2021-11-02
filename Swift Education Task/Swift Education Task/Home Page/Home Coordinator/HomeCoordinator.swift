@@ -21,7 +21,22 @@ class HomeCoordinator: Coordinator
     //MARK: - Coordinator methods
     func start()
     {
-        let vc = HomeViewController(nibName: HomeViewController.reuseIdentifier, bundle: nil)
+        let homePresenter   = HomePresenter()
+        let vc              = HomeViewController(presenter: homePresenter, coordinator: self)
         navigationController.pushViewController(vc, animated: false)
+    }
+    
+    func moveToPage2()
+    {
+        let coordinator = DynamicCoordinator(navigationController: navigationController)
+        coordinator.start()
+    }
+    
+    func moveToPage3()
+    {
+        guard let homeVC        = navigationController.viewControllers[0] as? HomeViewController else { return }
+        guard let numberOfCells = homeVC.page2SelectedCellIndex else { return }
+        let coordinator         = ThirdPageCoordinator(navigationController: navigationController, numberOfCells: numberOfCells)
+        coordinator.start()
     }
 }

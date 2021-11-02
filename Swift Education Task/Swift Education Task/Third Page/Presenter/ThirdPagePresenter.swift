@@ -19,18 +19,13 @@ class ThirdPagePresenter: ThirdPagePresenterProtocol
     private var cellPresenters  : [ThirdPageCellPresenterProtocol] = []
     private var numberOfCells   = 0
     
-    //TODO: - Add Number of cells to the constructor
-    init(delegate: ThirdPagePresenterProtocol)
+    init(numberOfCells: Int)
     {
-        self.delegate = delegate
+        self.numberOfCells  = numberOfCells
+        makeCellPresenters()
     }
     
     //MARK: - Presenter Methods
-    func setNumberOfCells(number: Int)
-    {
-        self.numberOfCells = number
-        makeCellPresenters()
-    }
     
     func getNumberOfRowsInSection(section: Int) -> Int
     {

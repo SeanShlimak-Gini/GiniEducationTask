@@ -23,8 +23,8 @@ class ThirdPageCoordinator: Coordinator
     //MARK: - Coordinator methods
     func start()
     {
-        let vc = ThirdPageCollectionViewController(nibName: ThirdPageCollectionViewController.reuseIdentifier, bundle: nil)
-        vc.setNumberOfCells(number: self.numberOfCells)
+        let presenter   = ThirdPagePresenter(numberOfCells: numberOfCells)
+        let vc          = ThirdPageCollectionViewController(presenter: presenter, coordinator: self)
         navigationController.pushViewController(vc, animated: false)
     }
     

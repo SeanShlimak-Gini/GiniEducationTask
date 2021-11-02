@@ -17,23 +17,17 @@ protocol HomePresenterDelegate: AnyObject
 class HomePresenter
 {
     //MARK: - Properties
-    private weak var presenterDelegate: HomePresenterDelegate?
-    
-    init(with homeViewPresenter: HomePresenterDelegate & UIViewController)
-    {
-        self.presenterDelegate = homeViewPresenter
-    }
+    weak var delegate: HomePresenterDelegate?
     
     //MARK: - Presenter Methods
-    func startButtonTapped(navigateTo: HomeNavigationDestinations)
+    func userTappedStartButton()
     {
-        switch navigateTo {
-        case .page2:
-            presenterDelegate?.navigateToPage2()
-        case .page3:
-            presenterDelegate?.navigateToPage3()
-        case .page4:
-            return
-        }
+        delegate?.navigateToPage2()
     }
+    
+    func userTappedDataPassedButton()
+    {
+        delegate?.navigateToPage3()
+    }
+    
 }
