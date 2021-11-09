@@ -12,9 +12,9 @@ extension UIColor
     static func randomColor() -> UIColor
     {
         return UIColor(
-            red: .randomCGFloat(),
-            green: .randomCGFloat(),
-            blue: .randomCGFloat(),
+            red     : .randomCGFloat(),
+            green   : .randomCGFloat(),
+            blue    : .randomCGFloat(),
             alpha: 1.0
         )
     }

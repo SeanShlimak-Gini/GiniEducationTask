@@ -8,13 +8,6 @@
 import UIKit
 import Reusable
 
-enum HomeNavigationDestinations
-{
-    case page2
-    case page3
-    case page4
-}
-
 class HomeViewController: UIViewController, Reusable
 {
     //MARK: - Outlets
@@ -74,13 +67,13 @@ class HomeViewController: UIViewController, Reusable
         dataPassedButton.layer.masksToBounds    = false
     }
     
-    
     private func animateButtonText(text: String)
     {
-        guard let buttonTitleLabel  = dataPassedButton.titleLabel else { return }
-        UIView.transition(with: buttonTitleLabel, duration: 5.0, options: [.curveEaseOut])
+        guard let buttonTitleLabel = dataPassedButton.titleLabel else { return }
+        UIView.transition(with: buttonTitleLabel, duration: 2.0, options: [.curveEaseOut])
         { [weak self] in
             self?.dataPassedButton.setTitle(text, for: .normal)
+            self?.view.layoutIfNeeded()
         }
     }
     
@@ -106,31 +99,40 @@ class HomeViewController: UIViewController, Reusable
 
 extension HomeViewController: HomePresenterDelegate
 {
-    
     func navigateToPage2()
     {
         resetViewToInitialState()
-        coordinator?.moveToPage2()
+        coordinator?.moveToPage2(delegate: self)
     }
     
     func navigateToPage3()
     {
         resetViewToInitialState()
-        coordinator?.moveToPage3()
+        coordinator?.moveToPage3(numberOfCells: page2SelectedCellIndex ?? 0)
     }
 }
 
-extension HomeViewController: DynamicPageViewControllerDelegate
+extension HomeViewController: DynamicViewControllerDelegate
 {
-    func passSelectedCellIndex(index: Int)
+    func passCellInfo(cellLabelTitle: String)
     {
-        self.page2SelectedCellIndex = index
         addGestureRecognizerToSuperView()
-        DispatchQueue.main.async
-        { [weak self] in
-            self?.dataPassedButton.isHidden = false
-            self?.animateButtonText(text: StringConstants.dataPassedButtonTitle)
-            self?.startButton.setTitle(String(index), for: .normal)
+        if cellLabelTitle.isInt
+        {
+            self.page2SelectedCellIndex = Int(cellLabelTitle)
+            DispatchQueue.main.async
+            { [weak self] in
+                self?.dataPassedButton.isHidden = false
+                self?.animateButtonText(text: StringConstants.dataPassedButtonTitle)
+                self?.startButton.setTitle(cellLabelTitle, for: .normal)
+            }
+        } else
+        {
+            DispatchQueue.main.async
+            { [weak self] in
+                self?.animateButtonText(text: cellLabelTitle)
+                self?.startButton.setTitle(StringConstants.startButtonTitle, for: .normal)
+            }
         }
     }
 }

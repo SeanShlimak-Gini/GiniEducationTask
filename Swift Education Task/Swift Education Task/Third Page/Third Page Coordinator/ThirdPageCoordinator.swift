@@ -28,6 +28,12 @@ class ThirdPageCoordinator: Coordinator
         navigationController.pushViewController(vc, animated: false)
     }
     
+    func moveToPage4()
+    {
+        let coordinator = DynamicCoordinator(navigationController: navigationController)
+        coordinator.setPage4()
+    }
+    
     func remove()
     {
         navigationController.popViewController(animated: true)

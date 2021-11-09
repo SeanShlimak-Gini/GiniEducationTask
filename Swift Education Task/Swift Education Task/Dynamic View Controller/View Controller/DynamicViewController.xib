@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DynamicViewController" customModule="Swift_Education_Task" customModuleProvider="target">
+            <connections>
+                <outlet property="goButton" destination="o8y-39-bjj" id="5ch-4e-oii"/>
+                <outlet property="tableView" destination="4bu-Oa-YsV" id="Hi0-4m-cxI"/>
+                <outlet property="userTextField" destination="7aU-b2-ZYg" id="kMb-Na-y5W"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="6eL-2W-spJ">
+                    <rect key="frame" x="0.0" y="94" width="406" height="34"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o8y-39-bjj">
+                            <rect key="frame" x="0.0" y="0.0" width="99" height="34"/>
+                            <color key="tintColor" red="0.96024721859999995" green="0.030621722340000001" blue="0.37147098779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" title="Go"/>
+                            <connections>
+                                <action selector="goButtonTapped:" destination="-1" eventType="touchUpInside" id="CZf-Fi-Ru6"/>
+                            </connections>
+                        </button>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Text" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7aU-b2-ZYg">
+                            <rect key="frame" x="99" y="0.0" width="307" height="34"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                    </subviews>
+                </stackView>
+                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="4bu-Oa-YsV">
+                    <rect key="frame" x="0.0" y="148" width="414" height="714"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="6eL-2W-spJ" secondAttribute="trailing" constant="8" id="0il-gj-mrT"/>
+                <constraint firstItem="4bu-Oa-YsV" firstAttribute="top" secondItem="6eL-2W-spJ" secondAttribute="bottom" constant="20" id="SSO-ik-WYG"/>
+                <constraint firstItem="6eL-2W-spJ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Tma-8u-ktP"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="4bu-Oa-YsV" secondAttribute="trailing" id="UZg-rb-G9Q"/>
+                <constraint firstItem="4bu-Oa-YsV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="bQP-Z2-3pe"/>
+                <constraint firstItem="6eL-2W-spJ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="50" id="nKs-0H-Hyg"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="4bu-Oa-YsV" secondAttribute="bottom" id="tTC-OR-in6"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="114"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -7,10 +7,7 @@
 
 import Foundation
 
-protocol ThirdPagePresenterProtocol: AnyObject
-{
-    
-}
+protocol ThirdPagePresenterProtocol: AnyObject {}
 
 class ThirdPagePresenter: ThirdPagePresenterProtocol
 {
@@ -53,8 +50,7 @@ class ThirdPagePresenter: ThirdPagePresenterProtocol
     {
         for _ in 0...numberOfCells
         {
-            let presenter = ThirdPageCellPresenter()
-            cellPresenters.append(presenter)
+            cellPresenters.append(ThirdPageCellPresenter())
         }
     }
 }

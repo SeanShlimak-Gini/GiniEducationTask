@@ -20,7 +20,7 @@ class ThirdPageCollectionViewController: UIViewController, Reusable
     /// Custom initializer
     init(presenter: ThirdPagePresenter, coordinator: ThirdPageCoordinator)
     {
-        super.init(nibName: Self.reuseIdentifier, bundle: nil)
+        super.init(nibName: nil, bundle: nil)
         self.presenter              = presenter
         self.coordinator            = coordinator
         self.presenter?.delegate    = self
@@ -34,13 +34,18 @@ class ThirdPageCollectionViewController: UIViewController, Reusable
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        collectionView.dataSource   = self
-        collectionView.delegate     = self
+        setUpCollectionView()
         addLongGestureRecognizerToCollectionView()
-        registerCollectionViewCell()
     }
     
     //MARK: - Private methods
+    private func setUpCollectionView()
+    {
+        collectionView.dataSource   = self
+        collectionView.delegate     = self
+        registerCollectionViewCell()
+    }
+    
     private func registerCollectionViewCell()
     {
         collectionView.register(cellType: ThirdPageCollectionViewCell.self)
@@ -68,10 +73,7 @@ class ThirdPageCollectionViewController: UIViewController, Reusable
     }
 }
 
-extension ThirdPageCollectionViewController: ThirdPagePresenterProtocol
-{
-    
-}
+extension ThirdPageCollectionViewController: ThirdPagePresenterProtocol{}
 
 //MARK: - CollectionView data source + delegate handling
 extension ThirdPageCollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate
@@ -92,7 +94,8 @@ extension ThirdPageCollectionViewController: UICollectionViewDataSource, UIColle
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
     {
-        
+        coordinator?.moveToPage4()
+        collectionView.deselectItem(at: indexPath, animated: true)
     }
 }
 

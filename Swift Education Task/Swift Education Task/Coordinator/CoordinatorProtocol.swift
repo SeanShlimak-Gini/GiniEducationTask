@@ -19,5 +19,6 @@ protocol Coordinator
 
 extension Coordinator
 {
+    func start(){}
     func remove(){}
 }

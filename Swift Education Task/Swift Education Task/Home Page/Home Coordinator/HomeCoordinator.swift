@@ -12,6 +12,7 @@ class HomeCoordinator: Coordinator
     //MARK: - Properties
     var childCoordinators       = [Coordinator]()
     var navigationController    : UINavigationController
+    private var vc              : UIViewController!
     
     init(navigationController: UINavigationController)
     {
@@ -22,21 +23,19 @@ class HomeCoordinator: Coordinator
     func start()
     {
         let homePresenter   = HomePresenter()
-        let vc              = HomeViewController(presenter: homePresenter, coordinator: self)
+        vc                  = HomeViewController(presenter: homePresenter, coordinator: self)
         navigationController.pushViewController(vc, animated: false)
     }
     
-    func moveToPage2()
+    func moveToPage2(delegate: DynamicViewControllerDelegate)
     {
         let coordinator = DynamicCoordinator(navigationController: navigationController)
-        coordinator.start()
+        coordinator.navigateToPage2(delegate: delegate)
     }
     
-    func moveToPage3()
+    func moveToPage3(numberOfCells: Int)
     {
-        guard let homeVC        = navigationController.viewControllers[0] as? HomeViewController else { return }
-        guard let numberOfCells = homeVC.page2SelectedCellIndex else { return }
-        let coordinator         = ThirdPageCoordinator(navigationController: navigationController, numberOfCells: numberOfCells)
+        let coordinator = ThirdPageCoordinator(navigationController: navigationController, numberOfCells: numberOfCells)
         coordinator.start()
     }
 }

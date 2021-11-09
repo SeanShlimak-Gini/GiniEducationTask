@@ -14,7 +14,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var coordinator  : HomeCoordinator?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        setupInitialScreen()
+        return true
+    }
+    
+    private func setupInitialScreen()
+    {
         window                                      = UIWindow(frame: UIScreen.main.bounds)
         let navController                           = UINavigationController()
         navController.navigationBar.isTranslucent   = false
@@ -22,9 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         coordinator?.start()
         self.window?.rootViewController             = navController
         self.window?.makeKeyAndVisible()
-        return true
     }
-
+    
     // MARK: UISceneSession Lifecycle
 
     @available(iOS 13.0, *)
@@ -40,7 +44,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-
-
 }
 
