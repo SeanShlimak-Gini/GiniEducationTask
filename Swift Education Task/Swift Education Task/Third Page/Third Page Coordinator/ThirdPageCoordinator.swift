@@ -24,7 +24,7 @@ class ThirdPageCoordinator: Coordinator
     //MARK: - Coordinator methods
     func start()
     {
-        let presenter   = ThirdPagePresenter(numberOfCells: numberOfCells)
+        let presenter   = ThirdPagePresenter(numberOfCells: numberOfCells, coordinator: self)
         let vc          = ThirdPageCollectionViewController(presenter: presenter, coordinator: self)
         navigationController.pushViewController(vc, animated: false)
     }

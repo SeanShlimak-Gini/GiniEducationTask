@@ -15,21 +15,28 @@ class ThirdPagePresenter: ThirdPagePresenterProtocol
     weak var delegate           : ThirdPagePresenterProtocol?
     private var cellPresenters  : [ThirdPageCellPresenterProtocol] = []
     private var numberOfCells   = 0
+    weak var coordinator        : ThirdPageCoordinator?
     
-    init(numberOfCells: Int)
+    init(numberOfCells: Int, coordinator: ThirdPageCoordinator)
     {
         self.numberOfCells  = numberOfCells
+        self.coordinator    = coordinator
         makeCellPresenters()
     }
     
     //MARK: - Presenter Methods
+    func userDidSelectItem()
+    {
+        coordinator?.moveToPage4()
+        coordinator?.remove()
+    }
     
     func getNumberOfRowsInSection(section: Int) -> Int
     {
         return numberOfCells
     }
     
-    func removeOneCellFromTotalCount()
+    func userDidLongPressInCell()
     {
         if numberOfCells == 0
         {

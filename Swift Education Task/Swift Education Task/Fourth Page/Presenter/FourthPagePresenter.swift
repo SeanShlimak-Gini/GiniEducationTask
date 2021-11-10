@@ -9,11 +9,10 @@ import UIKit
 
 protocol FourthPagePresenterDelegate: DynamicViewControllerDelegate{}
 
-class FourthPagePresenter
+class FourthPagePresenter: DynamicPagePresenterProtocol
 {
     //MARK: - Properties
     weak var delegate                   : DynamicPagePresenterProtocol?
-    weak var coordinator                : DynamicCoordinator?
     private var numberOfCells           : Int = 0
     private var cellPresenters          : [FourthPageTableViewCellPresenter] = []
     
@@ -29,14 +28,20 @@ class FourthPagePresenter
                 strongSelf.delegate?
                     .presentErrorForEnteredTextDialog(title: StringConstants.noResultsForTextAlertTitle, message: StringConstants.noResultsForTextAlertMessage)
             }
+            
             guard let records       = response?.result.records else { return }
-
-            let filteredNames     = strongSelf.filterSettelmentResults(settelments: records, userText: userText)
+            if records.count == 0
+            {
+                strongSelf.delegate?
+                .presentErrorForEnteredTextDialog(title: StringConstants.noResultsForTextAlertTitle, message: StringConstants.noResultsForTextAlertMessage)
+            }
+            
+            let filteredNames       = strongSelf.filterSettelmentResults(settelments: records, userText: userText)
             strongSelf.setNumberOfCells(number: filteredNames.count)
             
             for index in 0...(strongSelf.numberOfCells - 1)
             {
-                self?.cellPresenters.append(FourthPageTableViewCellPresenter(settelmentName: filteredNames[index]))
+                strongSelf.cellPresenters.append(FourthPageTableViewCellPresenter(settelmentName: filteredNames[index]))
             }
             strongSelf.delegate?.populateTableView()
         }
@@ -57,7 +62,7 @@ class FourthPagePresenter
         return filteredNames
     }
 }
-extension FourthPagePresenter: DynamicPagePresenterProtocol
+extension FourthPagePresenter
 {
     //MARK: - Presenter methods
     func goButtonTapped(userText: String)

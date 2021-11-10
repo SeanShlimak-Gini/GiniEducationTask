@@ -8,7 +8,7 @@ import Foundation
 
 protocol SecondPagePresenterDelegate: DynamicViewControllerDelegate{}
 
-class SecondPagePresenter
+class SecondPagePresenter: DynamicPagePresenterProtocol
 {
     //MARK: - Properties
     weak var delegate                   : DynamicPagePresenterProtocol?
@@ -25,7 +25,7 @@ class SecondPagePresenter
     }
 }
 
-extension SecondPagePresenter: DynamicPagePresenterProtocol
+extension SecondPagePresenter
 {
     //MARK: - Presenter methods
     func goButtonTapped(userText: String)
@@ -49,7 +49,7 @@ extension SecondPagePresenter: DynamicPagePresenterProtocol
     {
         delegate?.populateTableView()
     }
-  
+    
     func getNumberOfRowsInSection(section: Int) -> Int
     {
         return self.numberOfCells

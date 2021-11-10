@@ -13,7 +13,7 @@ struct APIManager
     
     static func makeRequest(settelmentName: String ,callbackResult: @escaping (JSONDataResult?) -> Void)
     {
-        if settelmentName.isInt || settelmentName == ""
+        if settelmentName.isInt || settelmentName == "" || settelmentName.isNotAChar 
         {
             callbackResult(nil)
             return

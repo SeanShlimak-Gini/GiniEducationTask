@@ -12,4 +12,16 @@ extension String
     {
         return Int(self) != nil
     }
+    
+    var isNotAChar: Bool
+    {
+        let array       = Array(self)
+        var isNotChar   = false
+        
+        let _ = array.map
+        { char in
+            isNotChar = !char.isLetter
+        }
+        return isNotChar
+    }
 }

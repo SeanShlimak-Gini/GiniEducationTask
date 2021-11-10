@@ -21,14 +21,14 @@ class DynamicViewController: UIViewController, NibReusable {
     
     //MARK: - Properties
     weak var delegate           : DynamicViewControllerDelegate?
-    private var coordinator     : DynamicCoordinator?
     private var presenter       : DynamicPagePresenterProtocol?
-    
+    private var coordinator     : DynamicCoordinator?
     /// Custom initializer
     init(coordinator: DynamicCoordinator, presenter: DynamicPagePresenterProtocol)
     {
         super.init(nibName: nil, bundle: nil)
-        self.presenter      = presenter
+        self.presenter          = presenter
+        self.coordinator        = coordinator
     }
     
     required init?(coder: NSCoder)
@@ -133,6 +133,7 @@ extension DynamicViewController: UITableViewDataSource, UITableViewDelegate
 
 extension DynamicViewController: DynamicPagePresenterProtocol
 {
+    
     func populateTableView()
     {
         DispatchQueue.main.async

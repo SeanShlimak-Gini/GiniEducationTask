@@ -15,15 +15,14 @@ class ThirdPageCollectionViewController: UIViewController, Reusable
     
     //MARK: - Properties
     private var presenter   : ThirdPagePresenter?
-    private var coordinator : ThirdPageCoordinator?
     
     /// Custom initializer
     init(presenter: ThirdPagePresenter, coordinator: ThirdPageCoordinator)
     {
         super.init(nibName: nil, bundle: nil)
-        self.presenter              = presenter
-        self.coordinator            = coordinator
-        self.presenter?.delegate    = self
+        self.presenter                  = presenter
+        self.presenter?.delegate        = self
+        self.presenter?.coordinator    = coordinator
     }
     
     required init?(coder: NSCoder)
@@ -66,7 +65,7 @@ class ThirdPageCollectionViewController: UIViewController, Reusable
         guard let indexPath = collectionView.indexPathForItem(at: point) else { return }
         DispatchQueue.main.async
         { [weak self] in
-            self?.presenter?.removeOneCellFromTotalCount()
+            self?.presenter?.userDidLongPressInCell()
             self?.collectionView.deleteItems(at: [indexPath])
             self?.collectionView.layoutIfNeeded()
         }
@@ -80,8 +79,7 @@ extension ThirdPageCollectionViewController: UICollectionViewDataSource, UIColle
 {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-        guard let numberOfItemsInSection = presenter?.getNumberOfRowsInSection(section: section) else { return 0 }
-        return numberOfItemsInSection
+        return presenter?.getNumberOfRowsInSection(section: section) ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
@@ -94,8 +92,7 @@ extension ThirdPageCollectionViewController: UICollectionViewDataSource, UIColle
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
     {
-        coordinator?.moveToPage4()
-        coordinator?.remove()
+        presenter?.userDidSelectItem()
         collectionView.deselectItem(at: indexPath, animated: true)
     }
 }
