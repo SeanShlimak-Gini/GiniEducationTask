@@ -95,6 +95,7 @@ extension ThirdPageCollectionViewController: UICollectionViewDataSource, UIColle
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
     {
         coordinator?.moveToPage4()
+        coordinator?.remove()
         collectionView.deselectItem(at: indexPath, animated: true)
     }
 }

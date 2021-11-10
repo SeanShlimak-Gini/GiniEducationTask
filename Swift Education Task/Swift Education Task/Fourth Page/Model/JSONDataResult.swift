@@ -19,9 +19,9 @@ struct ResponseObject: Decodable
 
 struct Settelment: Decodable
 {
-    var settelmentName: String
+    var settelmentName  : String
     
-    enum CodingKeys: String, CodingKey
+    enum CodingKeys     : String, CodingKey
     {
         case settelmentName = "שם_ישוב"
     }

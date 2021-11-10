@@ -13,6 +13,7 @@ class FourthPagePresenter
 {
     //MARK: - Properties
     weak var delegate                   : DynamicPagePresenterProtocol?
+    weak var coordinator                : DynamicCoordinator?
     private var numberOfCells           : Int = 0
     private var cellPresenters          : [FourthPageTableViewCellPresenter] = []
     
@@ -30,14 +31,13 @@ class FourthPagePresenter
             }
             guard let records       = response?.result.records else { return }
 
-            let filteredResults     = strongSelf.filterSettelmentResults(settelments: records, userText: userText)
-            strongSelf.setNumberOfCells(number: filteredResults.count)
+            let filteredNames     = strongSelf.filterSettelmentResults(settelments: records, userText: userText)
+            strongSelf.setNumberOfCells(number: filteredNames.count)
             
             for index in 0...(strongSelf.numberOfCells - 1)
             {
-                self?.cellPresenters.append(FourthPageTableViewCellPresenter(settelmentName: filteredResults[index]))
+                self?.cellPresenters.append(FourthPageTableViewCellPresenter(settelmentName: filteredNames[index]))
             }
-            
             strongSelf.delegate?.populateTableView()
         }
     }
@@ -45,8 +45,8 @@ class FourthPagePresenter
     private func filterSettelmentResults(settelments: [Settelment], userText: String) -> [String]
     {
         let settelmentsNames    = settelments.map
-        { settelment in
-            return settelment.settelmentName
+        { settelments in
+            return settelments.settelmentName
         }
         
         let filteredNames       = settelmentsNames.filter

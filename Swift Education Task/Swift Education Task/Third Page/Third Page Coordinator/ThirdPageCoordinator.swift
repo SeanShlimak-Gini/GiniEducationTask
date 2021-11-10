@@ -13,6 +13,7 @@ class ThirdPageCoordinator: Coordinator
     var childCoordinators       : [Coordinator] = []
     var navigationController    : UINavigationController
     private var numberOfCells   = 0
+    weak var parentCoordinator  : MainCoordinator?
     
     init(navigationController: UINavigationController, numberOfCells: Int)
     {
@@ -30,11 +31,18 @@ class ThirdPageCoordinator: Coordinator
     
     func moveToPage4()
     {
-        let coordinator = DynamicCoordinator(navigationController: navigationController)
-        coordinator.setPage4()
+        let child                   = DynamicCoordinator(navigationController: navigationController)
+        guard let parentCoordinator = parentCoordinator else { return }
+        child.parentCoordinator     = parentCoordinator
+        child.setPage4()
     }
     
     func remove()
+    {
+        parentCoordinator?.childDidFinish(self)
+    }
+    
+    func popViewController()
     {
         navigationController.popViewController(animated: true)
     }

@@ -12,6 +12,7 @@ class DynamicCoordinator: Coordinator
     var childCoordinators       : [Coordinator] = []
     var navigationController    : UINavigationController
     private weak var delegate   : DynamicViewControllerDelegate?
+    weak var parentCoordinator  : MainCoordinator?
     
     init(navigationController: UINavigationController)
     {
@@ -39,6 +40,11 @@ class DynamicCoordinator: Coordinator
     }
     
     func remove()
+    {
+        parentCoordinator?.childDidFinish(self)
+    }
+    
+    func popViewController()
     {
         navigationController.popViewController(animated: true)
     }

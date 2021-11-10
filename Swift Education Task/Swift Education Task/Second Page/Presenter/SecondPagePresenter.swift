@@ -30,6 +30,12 @@ extension SecondPagePresenter: DynamicPagePresenterProtocol
     //MARK: - Presenter methods
     func goButtonTapped(userText: String)
     {
+        if userText == ""
+        {
+            presentNoTextEnteredDialog()
+            return
+        }
+        
         makeCellPresenters()
         populateTableView()
     }
@@ -70,7 +76,6 @@ extension SecondPagePresenter: DynamicPagePresenterProtocol
     {
         if userText.isEmpty
         {
-            
             presentNoTextEnteredDialog()
             return
         }

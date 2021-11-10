@@ -38,7 +38,7 @@
 		9DC025ED272A6AAF0055ED48 /* CGFloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC025EC272A6AAF0055ED48 /* CGFloatExtension.swift */; };
 		9DC025EF272A6B140055ED48 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC025EE272A6B140055ED48 /* UIColorExtension.swift */; };
 		9DDEAE1E272FE85F00E259CF /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDEAE1D272FE85F00E259CF /* CoordinatorProtocol.swift */; };
-		9DDEAE22272FECC500E259CF /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDEAE21272FECC500E259CF /* HomeCoordinator.swift */; };
+		9DDEAE22272FECC500E259CF /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDEAE21272FECC500E259CF /* MainCoordinator.swift */; };
 		9DDEAE26272FF37900E259CF /* DynamicCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDEAE25272FF37900E259CF /* DynamicCoordinator.swift */; };
 		9DDEAE29272FF7C100E259CF /* ThirdPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDEAE28272FF7C100E259CF /* ThirdPageCoordinator.swift */; };
 		9DDEAE2C27300D9500E259CF /* StringsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDEAE2B27300D9500E259CF /* StringsConstants.swift */; };
@@ -102,7 +102,7 @@
 		9DC025EC272A6AAF0055ED48 /* CGFloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtension.swift; sourceTree = "<group>"; };
 		9DC025EE272A6B140055ED48 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		9DDEAE1D272FE85F00E259CF /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
-		9DDEAE21272FECC500E259CF /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
+		9DDEAE21272FECC500E259CF /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		9DDEAE25272FF37900E259CF /* DynamicCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCoordinator.swift; sourceTree = "<group>"; };
 		9DDEAE28272FF7C100E259CF /* ThirdPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPageCoordinator.swift; sourceTree = "<group>"; };
 		9DDEAE2B27300D9500E259CF /* StringsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringsConstants.swift; sourceTree = "<group>"; };
@@ -351,6 +351,7 @@
 		9D8B96A327281C2500D1248E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				9DDEAE2A27300D8600E259CF /* Strings */,
 				9D8B96A6272821B200D1248E /* StringExtension.swift */,
 				9DC025EC272A6AAF0055ED48 /* CGFloatExtension.swift */,
 				9DC025EE272A6B140055ED48 /* UIColorExtension.swift */,
@@ -391,10 +392,9 @@
 		9DAE77592725819500361BA0 /* Swift Education Task */ = {
 			isa = PBXGroup;
 			children = (
+				9DDEAE1C272FE84400E259CF /* Coordinator */,
 				9D09BE5B2737A27900715AB4 /* Dynamic View Controller */,
 				9D09BE452732E03B00715AB4 /* Fourth Page */,
-				9DDEAE2A27300D8600E259CF /* Strings */,
-				9DDEAE1C272FE84400E259CF /* Coordinator */,
 				9D5EF067272A864400948495 /* Third Page */,
 				9D5EF062272A848D00948495 /* Second Page */,
 				9D5EF05F272A844B00948495 /* Home Page */,
@@ -436,7 +436,7 @@
 		9DDEAE23272FF31700E259CF /* Home Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				9DDEAE21272FECC500E259CF /* HomeCoordinator.swift */,
+				9DDEAE21272FECC500E259CF /* MainCoordinator.swift */,
 			);
 			path = "Home Coordinator";
 			sourceTree = "<group>";
@@ -645,7 +645,7 @@
 				9DC025ED272A6AAF0055ED48 /* CGFloatExtension.swift in Sources */,
 				9D5EF074272A88B100948495 /* ThirdPagePresenter.swift in Sources */,
 				9D09BE4A2732E28100715AB4 /* JSONDataResult.swift in Sources */,
-				9DDEAE22272FECC500E259CF /* HomeCoordinator.swift in Sources */,
+				9DDEAE22272FECC500E259CF /* MainCoordinator.swift in Sources */,
 				9D5EF071272A872900948495 /* ThirdPageCollectionViewCell.swift in Sources */,
 				9DDEAE26272FF37900E259CF /* DynamicCoordinator.swift in Sources */,
 				9DDEAE2C27300D9500E259CF /* StringsConstants.swift in Sources */,

@@ -28,7 +28,6 @@ class DynamicViewController: UIViewController, NibReusable {
     init(coordinator: DynamicCoordinator, presenter: DynamicPagePresenterProtocol)
     {
         super.init(nibName: nil, bundle: nil)
-        self.coordinator    = coordinator
         self.presenter      = presenter
     }
     
@@ -126,9 +125,9 @@ extension DynamicViewController: UITableViewDataSource, UITableViewDelegate
     {
         guard let cellTitle = presenter?.getCellTitleLabel(for: indexPath) else { return }
         delegate?.passCellInfo(cellLabelTitle: cellTitle)
+        cellTitle.isInt ?  coordinator?.popViewController() : coordinator?.navigateBackToHomeVC()
+        coordinator?.remove()
         tableView.deselectRow(at: indexPath, animated: true)
-        cellTitle.isInt ? coordinator?.remove() : coordinator?.navigateBackToHomeVC()
-        
     }
 }
 

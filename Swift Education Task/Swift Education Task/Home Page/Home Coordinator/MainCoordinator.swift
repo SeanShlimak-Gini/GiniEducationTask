@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeCoordinator: Coordinator
+class MainCoordinator: Coordinator
 {
     //MARK: - Properties
     var childCoordinators       = [Coordinator]()
@@ -29,13 +29,29 @@ class HomeCoordinator: Coordinator
     
     func moveToPage2(delegate: DynamicViewControllerDelegate)
     {
-        let coordinator = DynamicCoordinator(navigationController: navigationController)
-        coordinator.navigateToPage2(delegate: delegate)
+        let child               = DynamicCoordinator(navigationController: navigationController)
+        child.parentCoordinator = self
+        childCoordinators.append(child)
+        child.navigateToPage2(delegate: delegate)
     }
     
     func moveToPage3(numberOfCells: Int)
     {
-        let coordinator = ThirdPageCoordinator(navigationController: navigationController, numberOfCells: numberOfCells)
-        coordinator.start()
+        let child               = ThirdPageCoordinator(navigationController: navigationController, numberOfCells: numberOfCells)
+        child.parentCoordinator = self
+        childCoordinators.append(child)
+        child.start()
+    }
+    
+    func childDidFinish(_ child: Coordinator?)
+    {
+        for (index, coordinator) in childCoordinators.enumerated()
+        {
+            if coordinator === child
+            {
+                childCoordinators.remove(at: index)
+                break
+            }
+        }
     }
 }

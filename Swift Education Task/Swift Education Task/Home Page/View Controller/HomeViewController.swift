@@ -18,10 +18,10 @@ class HomeViewController: UIViewController, Reusable
     private var presenter               : HomePresenter?
     private var numberOfTaps            = 0
     var page2SelectedCellIndex          : Int?
-    private var coordinator             : HomeCoordinator?
+    private var coordinator             : MainCoordinator?
     
     /// Custom initializer
-    init(presenter: HomePresenter, coordinator: HomeCoordinator)
+    init(presenter: HomePresenter, coordinator: MainCoordinator)
     {
         super.init(nibName: Self.reuseIdentifier, bundle: nil)
         self.presenter              = presenter

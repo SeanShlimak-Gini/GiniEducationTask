@@ -20,7 +20,11 @@ struct APIManager
         }
         
         let queryItems          = [URLQueryItem(name: "q", value: settelmentName), URLQueryItem(name: "resource_id", value: "5c78e9fa-c2e2-4771-93ff-7f400a12f7ba")]
-        guard var urlComps      = URLComponents(string: baseURL) else { return }
+        guard var urlComps      = URLComponents(string: baseURL) else
+        {
+            callbackResult(nil)
+            return
+        }
         urlComps.queryItems     = queryItems
         
         guard let url           = urlComps.url else
@@ -30,7 +34,6 @@ struct APIManager
         }
         
         let session         = URLSession(configuration: .default)
-        let decoder         = JSONDecoder()
         session.dataTask(with: url)
         { (data, response, error) in
             if error != nil
@@ -40,7 +43,7 @@ struct APIManager
             do
             {
                 guard let data  = data else { return }
-                let result      = try decoder.decode(JSONDataResult.self, from: data)
+                let result      = try JSONDecoder().decode(JSONDataResult.self, from: data)
                 callbackResult(result)
             } catch
             {

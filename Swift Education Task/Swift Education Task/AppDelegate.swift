@@ -11,7 +11,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     //MARK: - Properties
     var window      : UIWindow?
-    var coordinator  : HomeCoordinator?
+    var coordinator  : MainCoordinator?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setupInitialScreen()
@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window                                      = UIWindow(frame: UIScreen.main.bounds)
         let navController                           = UINavigationController()
         navController.navigationBar.isTranslucent   = false
-        coordinator                                 = HomeCoordinator(navigationController: navController)
+        coordinator                                 = MainCoordinator(navigationController: navController)
         coordinator?.start()
         self.window?.rootViewController             = navController
         self.window?.makeKeyAndVisible()
