@@ -23,6 +23,7 @@ class DynamicViewController: UIViewController, NibReusable {
     weak var delegate           : DynamicViewControllerDelegate?
     private var presenter       : DynamicPagePresenterProtocol?
     private var coordinator     : DynamicCoordinator?
+    
     /// Custom initializer
     init(coordinator: DynamicCoordinator, presenter: DynamicPagePresenterProtocol)
     {
@@ -70,7 +71,7 @@ class DynamicViewController: UIViewController, NibReusable {
     
     private func setViewsBackgroundColor(isErrorState: Bool)
     {
-        presenter?.setNumberOfCells(number: 0)
+        presenter?.resetPresenter()
         if isErrorState
         {
             DispatchQueue.main.async
@@ -81,12 +82,18 @@ class DynamicViewController: UIViewController, NibReusable {
             }
         } else
         {
-            DispatchQueue.main.async
+            UIView.animate(withDuration: 2.0)
             { [weak self] in
+                self?.view.alpha = 0.4
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute:
+            { [weak self] in
+                self?.view.alpha                = 1
                 self?.view.backgroundColor      = .white
                 self?.tableView.backgroundColor = .white
                 self?.tableView.reloadData()
-            }
+            })
         }
     }
     
@@ -109,8 +116,7 @@ extension DynamicViewController: UITableViewDataSource, UITableViewDelegate
 {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        guard let presenter = presenter else { return 0 }
-        return presenter.getNumberOfRowsInSection(section: section)
+        return presenter?.getNumberOfRowsInSection(section: section) ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
@@ -148,7 +154,7 @@ extension DynamicViewController: DynamicPagePresenterProtocol
         setViewsBackgroundColor(isErrorState: true)
         present(createErrorForEnteredTextDialog(title: title, message: message), animated: true)
         { [weak self] in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0)
+            DispatchQueue.main.async
             {
                 self?.setViewsBackgroundColor(isErrorState: false)
             }
@@ -162,7 +168,6 @@ extension DynamicViewController: UITextFieldDelegate
     {
         if textField.text == ""
         {
-            presenter?.setNumberOfCells(number: 0)
             DispatchQueue.main.async
             { [weak self] in
                 self?.presenter?.resetPresenter()

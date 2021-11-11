@@ -7,25 +7,13 @@
 
 import Foundation
 
-protocol FourthPageTableViewCellPresenterProtocol: AnyObject
-{
-//    var delegate: FourthPageTableViewCellPresenterDelegate? { get set }
-}
-
-//protocol FourthPageTableViewCellPresenterDelegate: AnyObject
-//{
-//    func didFinishFetchingSettelments(settelmentName: String)
-//}
+protocol FourthPageTableViewCellPresenterProtocol: AnyObject {}
 
 class FourthPageTableViewCellPresenter: DynamicTableViewCellPresenter, FourthPageTableViewCellPresenterProtocol
 {
-    //MARK: - Properties
-//    var delegate: FourthPageTableViewCellPresenterDelegate?
-    
     init(settelmentName: String)
     {
         super.init(titleText: settelmentName)
         self.titleLabelText = settelmentName
-//        fetchSettelments(settelmentName: settelmentName)
     }
 }
