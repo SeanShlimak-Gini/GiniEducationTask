@@ -49,15 +49,9 @@ class FourthPagePresenter: DynamicPagePresenterProtocol
     
     private func filterSettelmentResults(settelments: [Settelment], userText: String) -> [String]
     {
-        let settelmentsNames    = settelments.map
-        { settelments in
-            return settelments.settelmentName
-        }
+        let settelmentsNames    = settelments.map { $0.settelmentName }
         
-        let filteredNames       = settelmentsNames.filter
-        {
-            return $0.hasPrefix(userText)
-        }
+        let filteredNames       = settelmentsNames.filter { $0.hasPrefix(userText) }
         
         return filteredNames
     }
