@@ -12,9 +12,15 @@ protocol FourthPagePresenterDelegate: DynamicViewControllerDelegate{}
 class FourthPagePresenter: DynamicPagePresenterProtocol
 {
     //MARK: - Properties
-    weak var delegate                   : DynamicPagePresenterProtocol?
+    weak var delegate                   : DynamicPagePresenterDelegate?
+    var coordinator                     : DynamicCoordinator?
     private var numberOfCells           : Int = 0
     private var cellPresenters          : [FourthPageTableViewCellPresenter] = []
+    
+    init(coordinator: DynamicCoordinator)
+    {
+        self.coordinator    = coordinator
+    }
     
     //MARK: - Private methods
     private func makeCellPresenters(userText: String)
@@ -25,21 +31,19 @@ class FourthPagePresenter: DynamicPagePresenterProtocol
             guard let strongSelf    = self else { return }
             if response == nil
             {
-                strongSelf.delegate?
-                    .presentErrorForEnteredTextDialog(title: StringConstants.noResultsForTextAlertTitle, message: StringConstants.noResultsForTextAlertMessage)
+                strongSelf.notifyNoResultsForEnteredText()
             }
             
             guard let records       = response?.result.records else { return }
             if records.count == 0
             {
-                strongSelf.delegate?
-                .presentErrorForEnteredTextDialog(title: StringConstants.noResultsForTextAlertTitle, message: StringConstants.noResultsForTextAlertMessage)
+                strongSelf.notifyNoResultsForEnteredText()
             }
             
             let filteredNames       = strongSelf.filterSettelmentResults(settelments: records, userText: userText)
             strongSelf.setNumberOfCells(number: filteredNames.count)
             
-            for index in 0...(strongSelf.numberOfCells - 1)
+            for index in 0..<strongSelf.numberOfCells
             {
                 strongSelf.cellPresenters.append(FourthPageTableViewCellPresenter(settelmentName: filteredNames[index]))
             }
@@ -51,9 +55,18 @@ class FourthPagePresenter: DynamicPagePresenterProtocol
     {
         let settelmentsNames    = settelments.map { $0.settelmentName }
         
-        let filteredNames       = settelmentsNames.filter { $0.hasPrefix(userText) }
+        let filteredNames       = settelmentsNames.filter { $0.contains(userText) }
         
         return filteredNames
+    }
+    
+    private func notifyNoResultsForEnteredText()
+    {
+        DispatchQueue.main.async
+        { [weak self] in
+            self?.delegate?
+            .presentErrorForEnteredTextDialog(title: StringConstants.noResultsForTextAlertTitle, message: StringConstants.noResultsForTextAlertMessage)
+        }
     }
 }
 extension FourthPagePresenter
@@ -117,6 +130,12 @@ extension FourthPagePresenter
             resetPresenter()
             return
         }
+    }
+    
+    func userDidSelectRow()
+    {
+        coordinator?.navigateBackToHomeVC()
+        coordinator?.remove()
     }
     
     func resetPresenter()

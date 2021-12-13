@@ -69,11 +69,17 @@ class HomeViewController: UIViewController, Reusable
     
     private func animateButtonText(text: String)
     {
-        guard let buttonTitleLabel = dataPassedButton.titleLabel else { return }
-        UIView.transition(with: buttonTitleLabel, duration: 2.0, options: [.curveEaseOut])
+        dataPassedButton.setTitle(text, for: .normal)
+        
+        dataPassedButton.titleLabel?.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+        dataPassedButton.titleLabel?.alpha = 0.0
+        
+        UIView.animate(withDuration: 1.0,
+                       delay: 0,
+                       options: [.autoreverse, .repeat])
         { [weak self] in
-            self?.dataPassedButton.setTitle(text, for: .normal)
-            self?.view.layoutIfNeeded()
+            self?.dataPassedButton.titleLabel?.alpha = 1.0
+            self?.dataPassedButton.titleLabel?.transform = .identity
         }
     }
     

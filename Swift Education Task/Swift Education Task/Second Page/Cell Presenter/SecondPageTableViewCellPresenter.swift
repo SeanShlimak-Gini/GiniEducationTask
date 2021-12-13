@@ -12,6 +12,5 @@ class SecondPageTableViewCellPresenter: DynamicTableViewCellPresenter
     init(index: Int)
     {
         super.init(titleText: String(index))
-        self.titleLabelText = String(index)
     }
 }

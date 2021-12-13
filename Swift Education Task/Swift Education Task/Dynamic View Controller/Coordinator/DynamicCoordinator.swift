@@ -22,20 +22,18 @@ class DynamicCoordinator: Coordinator
     //MARK: - Coordinator methods
     func navigateToPage2(delegate: DynamicViewControllerDelegate)
     {
-        let presenter           = SecondPagePresenter()
-        let viewController      = DynamicViewController(coordinator: self, presenter: presenter)
+        let presenter           = SecondPagePresenter(coordinator: self)
+        let viewController      = DynamicViewController(presenter: presenter)
         viewController.delegate = delegate
-        presenter.delegate      = viewController
         navigationController.pushViewController(viewController, animated: true)
     }
     
     func setPage4()
     {
         guard let homeVC        = navigationController.viewControllers.first as? HomeViewController else { return }
-        let presenter           = FourthPagePresenter()
-        let viewController      = DynamicViewController(coordinator: self, presenter: presenter)
+        let presenter           = FourthPagePresenter(coordinator: self)
+        let viewController      = DynamicViewController(presenter: presenter)
         viewController.delegate = homeVC
-        presenter.delegate      = viewController
         navigationController.pushViewController(viewController, animated: true)
     }
     

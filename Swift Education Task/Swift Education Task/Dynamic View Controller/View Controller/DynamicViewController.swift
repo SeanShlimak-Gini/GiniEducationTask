@@ -22,14 +22,13 @@ class DynamicViewController: UIViewController, NibReusable {
     //MARK: - Properties
     weak var delegate           : DynamicViewControllerDelegate?
     private var presenter       : DynamicPagePresenterProtocol?
-    private var coordinator     : DynamicCoordinator?
     
     /// Custom initializer
-    init(coordinator: DynamicCoordinator, presenter: DynamicPagePresenterProtocol)
+    init(presenter: DynamicPagePresenterProtocol)
     {
         super.init(nibName: nil, bundle: nil)
-        self.presenter          = presenter
-        self.coordinator        = coordinator
+        self.presenter              = presenter
+        self.presenter?.delegate    = self
     }
     
     required init?(coder: NSCoder)
@@ -131,15 +130,13 @@ extension DynamicViewController: UITableViewDataSource, UITableViewDelegate
     {
         guard let cellTitle = presenter?.getCellTitleLabel(for: indexPath) else { return }
         delegate?.passCellInfo(cellLabelTitle: cellTitle)
-        cellTitle.isInt ?  coordinator?.popViewController() : coordinator?.navigateBackToHomeVC()
-        coordinator?.remove()
+        presenter?.userDidSelectRow()
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
-extension DynamicViewController: DynamicPagePresenterProtocol
+extension DynamicViewController: DynamicPagePresenterDelegate
 {
-    
     func populateTableView()
     {
         DispatchQueue.main.async

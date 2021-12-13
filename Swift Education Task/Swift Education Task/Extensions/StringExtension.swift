@@ -18,9 +18,13 @@ extension String
         let array       = Array(self)
         var isNotChar   = false
         
-        let _ = array.map
-        { char in
-            isNotChar = !char.isLetter
+        array.forEach
+        {
+            if !$0.isLetter
+            {
+                isNotChar = false
+                return
+            }
         }
         return isNotChar
     }

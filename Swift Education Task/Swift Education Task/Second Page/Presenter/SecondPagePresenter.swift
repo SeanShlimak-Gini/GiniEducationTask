@@ -11,9 +11,15 @@ protocol SecondPagePresenterDelegate: DynamicViewControllerDelegate{}
 class SecondPagePresenter: DynamicPagePresenterProtocol
 {
     //MARK: - Properties
-    weak var delegate                   : DynamicPagePresenterProtocol?
+    weak var delegate                   : DynamicPagePresenterDelegate?
+    var coordinator                     : DynamicCoordinator?
     private var numberOfCells           : Int = 0
     private var cellPresenters          : [SecondPageTableViewCellPresenter] = []
+    
+    init(coordinator: DynamicCoordinator)
+    {
+        self.coordinator    = coordinator
+    }
     
     //MARK: - Private methods
     private func makeCellPresenters()
@@ -86,5 +92,11 @@ extension SecondPagePresenter
             return
         }
         setNumberOfCells(number: Int(userText)!)
+    }
+    
+    func userDidSelectRow()
+    {
+        coordinator?.popViewController()
+        coordinator?.remove()
     }
 }

@@ -14,6 +14,5 @@ class FourthPageTableViewCellPresenter: DynamicTableViewCellPresenter, FourthPag
     init(settelmentName: String)
     {
         super.init(titleText: settelmentName)
-        self.titleLabelText = settelmentName
     }
 }
